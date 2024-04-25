@@ -1,0 +1,16 @@
+.venv
+venv
+.idea
+.git
+node_modules
+*.env
+static
+static_cdn
+media
+media_cdn
+auth-django/
+chats-react-ui/
+main-react-ui/
+envs/
+*.envs
+websockets-django/
