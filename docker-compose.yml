@@ -57,25 +57,25 @@ services:
       && python manage.py runserver 0.0.0.0:8000
       "
 
-  websockets-django:
-    build: ./websockets-django/.
-    env_file:
-      - ./envs/django.env
-      - ./envs/websockets-django.env
-      - ./envs/postgreSQL.env
-    depends_on:
-      - postgres
-    expose:
-      - "8001"
-    volumes:
-      - ./websockets-django:/app
-    links:
-      - redis
-    command: bash -c "
-      python manage.py makemigrations
-      && python manage.py migrate
-      && python manage.py runserver 0.0.0.0:8001
-      "
+#  websockets-django:
+#    build: ./websockets-django/.
+#    env_file:
+#      - ./envs/django.env
+#      - ./envs/websockets-django.env
+#      - ./envs/postgreSQL.env
+#    depends_on:
+#      - postgres
+#    expose:
+#      - "8001"
+#    volumes:
+#      - ./websockets-django:/app
+#    links:
+#      - redis
+#    command: bash -c "
+#      python manage.py makemigrations
+#      && python manage.py migrate
+#      && python manage.py runserver 0.0.0.0:8001
+#      "
 
   nginx:
     image: nginx
