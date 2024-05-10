@@ -14,13 +14,13 @@ services:
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}" ]
 
-#  redis:
-#    image: redis
-#    expose:
-#      - "6379"
-#    ports:
-#      - "6379:6379"
-#
+  redis:
+    image: redis
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
+
 #  main-react-ui:
 #    build: ./main-react-ui/.
 #    env_file: envs/main-react-ui.env
