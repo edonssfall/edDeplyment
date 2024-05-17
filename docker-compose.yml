@@ -28,7 +28,9 @@ services:
       - '4200'
     volumes:
       - ./microservices/main-angular-ui:/web
-    command: ['ng', 'serve']
+    command: bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
+    ports:
+      - '4200:4200'
 
   chats-react-ui:
     build: ./microservices/chats-react-ui/.
@@ -90,7 +92,7 @@ services:
       - ./microservices/auth-django/media_cdn:/home/static/media # Django Auth media files
       - ./microservices/websockets-django/static_cdn:/home/static # Django Websockets static files
       - ./microservices/websockets-django/media_cdn:/home/static/media # Django Websockets media files
-      - ./microservices/main-angular-ui:/var/www/main-angular-ui # Main React UI
+      - ./microservices/main-angular-ui:/var/www/main-angular-ui # Main Angular UI
       - ./microservices/chats-react-ui:/var/www/chats-react-ui # Chats React UI
     ports:
       - '80:80'
