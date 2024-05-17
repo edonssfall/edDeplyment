@@ -18,8 +18,6 @@ services:
     image: redis
     expose:
       - '6379'
-    ports:
-      - '6379:6379'
 
   main-angular-ui:
     build: ./microservices/main-angular-ui/.
@@ -29,8 +27,6 @@ services:
     volumes:
       - ./microservices/main-angular-ui:/web
     command: ng serve --host 0.0.0.0 --port 4200
-    ports:
-      - '4200:4200'
 
   chats-react-ui:
     build: ./microservices/chats-react-ui/.
