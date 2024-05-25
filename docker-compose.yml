@@ -20,80 +20,80 @@ services:
       - '6379'
     ports:
       - '6379:6379'
-#
-#  main-angular-ui:
-#    build: ./microservices/main-angular-ui/.
-#    env_file: envs/main-angular-ui.env
-#    expose:
-#      - '4200'
-#    volumes:
-#      - ./microservices/main-angular-ui:/web
-#    command: ng serve --host 0.0.0.0 --port 4200
-#
-#  chats-react-ui:
-#    build: ./microservices/chats-react-ui/.
-#    env_file: ./envs/chats-react-ui.env
-#    expose:
-#      - '5174'
-#    volumes:
-#      - ./microservices/chats-react-ui:/web
-#    command: bash -c 'npm start'
-#
-#  auth-django:
-#    build: ./microservices/auth-django/.
-#    depends_on:
-#      - postgres
-#    env_file:
-#      - ./envs/django.env
-#      - ./envs/auth-django.env
-#      - ./envs/postgreSQL.env
-#    expose:
-#      - '8000'
-#    volumes:
-#      - ./microservices/auth-django:/app
-#    command: bash -c '
-#      ./wait-for-it.sh postgres:5432 -- python manage.py makemigrations
-#      && python manage.py migrate
-#      && python manage.py runserver 0.0.0.0:8000
-#      '
-#
-#  websockets-django:
-#    build: ./microservices/websockets-django/.
-#    env_file:
-#      - ./envs/django.env
-#      - ./envs/websockets-django.env
-#      - ./envs/postgreSQL.env
-#    depends_on:
-#      - postgres
-#    expose:
-#      - '8001'
-#    volumes:
-#      - ./microservices/websockets-django:/app
-#    links:
-#      - redis
-#    command: bash -c '
-#      ./wait-for-it.sh postgres:5432 -- python manage.py makemigrations
-#      && python manage.py migrate
-#      && python manage.py runserver 0.0.0.0:8001
-#      '
-#
-#  nginx:
-#    image: nginx
-#    depends_on:
-#      - auth-django
-#      - websockets-django
-#      - main-angular-ui
-#      - chats-react-ui
-#    volumes:
-#      - ./configs/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-#      - ./microservices/auth-django/static_cdn:/home/static # Django Auth static files
-#      - ./microservices/auth-django/media_cdn:/home/static/media # Django Auth media files
-#      - ./microservices/websockets-django/static_cdn:/home/static # Django Websockets static files
-#      - ./microservices/websockets-django/media_cdn:/home/static/media # Django Websockets media files
-#      - ./microservices/main-angular-ui:/var/www/main-angular-ui # Main Angular UI
-#      - ./microservices/chats-react-ui:/var/www/chats-react-ui # Chats React UI
-#    ports:
-#      - '80:80'
+
+  main-angular-ui:
+    build: ./microservices/main-angular-ui/.
+    env_file: envs/main-angular-ui.env
+    expose:
+      - '4200'
+    volumes:
+      - ./microservices/main-angular-ui:/web
+    command: ng serve --host 0.0.0.0 --port 4200
+
+  chats-react-ui:
+    build: ./microservices/chats-react-ui/.
+    env_file: ./envs/chats-react-ui.env
+    expose:
+      - '5174'
+    volumes:
+      - ./microservices/chats-react-ui:/web
+    command: bash -c 'npm start'
+
+  auth-django:
+    build: ./microservices/auth-django/.
+    depends_on:
+      - postgres
+    env_file:
+      - ./envs/django.env
+      - ./envs/auth-django.env
+      - ./envs/postgreSQL.env
+    expose:
+      - '8000'
+    volumes:
+      - ./microservices/auth-django:/app
+    command: bash -c '
+      ./wait-for-it.sh postgres:5432 -- python manage.py makemigrations
+      && python manage.py migrate
+      && python manage.py runserver 0.0.0.0:8000
+      '
+
+  websockets-django:
+    build: ./microservices/websockets-django/.
+    env_file:
+      - ./envs/django.env
+      - ./envs/websockets-django.env
+      - ./envs/postgreSQL.env
+    depends_on:
+      - postgres
+    expose:
+      - '8001'
+    volumes:
+      - ./microservices/websockets-django:/app
+    links:
+      - redis
+    command: bash -c '
+      ./wait-for-it.sh postgres:5432 -- python manage.py makemigrations
+      && python manage.py migrate
+      && python manage.py runserver 0.0.0.0:8001
+      '
+
+  nginx:
+    image: nginx
+    depends_on:
+      - auth-django
+      - websockets-django
+      - main-angular-ui
+      - chats-react-ui
+    volumes:
+      - ./configs/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./microservices/auth-django/static_cdn:/home/static # Django Auth static files
+      - ./microservices/auth-django/media_cdn:/home/static/media # Django Auth media files
+      - ./microservices/websockets-django/static_cdn:/home/static # Django Websockets static files
+      - ./microservices/websockets-django/media_cdn:/home/static/media # Django Websockets media files
+      - ./microservices/main-angular-ui:/var/www/main-angular-ui # Main Angular UI
+      - ./microservices/chats-react-ui:/var/www/chats-react-ui # Chats React UI
+    ports:
+      - '80:80'
 
 volumes:
   pgdata:
