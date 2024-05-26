@@ -75,13 +75,15 @@ services:
       - main-angular-ui
       - chats-react-ui
     volumes:
-      - ./configs/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./configs/nginx-prod.conf:/etc/nginx/conf.d/default.conf:ro
       - ./microservices/auth-django/static_cdn:/home/static # Django Auth static files
       - ./microservices/auth-django/media_cdn:/home/static/media # Django Auth media files
       - ./microservices/websockets-django/static_cdn:/home/static # Django Websockets static files
       - ./microservices/websockets-django/media_cdn:/home/static/media # Django Websockets media files
+      - ./zero-ssl:/etc/ssl # SSL certificates
     ports:
       - '80:80'
+      - '443:443'
 
 volumes:
   pgdata:
