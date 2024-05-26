@@ -11,33 +11,23 @@ services:
       - '5432'
     ports:
       - '5432:5432'
-    healthcheck:
-      test: [ 'CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-postgres}' ]
 
   redis:
     image: redis:7.2.5
     expose:
       - '6379'
-    ports:
-      - '6379:6379'
 
   main-angular-ui:
     build: ./microservices/main-angular-ui/.
-    env_file: envs/main-angular-ui.env
     expose:
       - '4200'
-    volumes:
-      - ./microservices/main-angular-ui:/web
-    command: ng serve --host 0.0.0.0 --port 4200
+    command: nginx -g 'daemon off;'
 
   chats-react-ui:
     build: ./microservices/chats-react-ui/.
-    env_file: ./envs/chats-react-ui.env
     expose:
-      - '5174'
-    volumes:
-      - ./microservices/chats-react-ui:/web
-    command: bash -c 'npm start'
+      - '5173'
+    command: nginx -g 'daemon off;'
 
   auth-django:
     build: ./microservices/auth-django/.
@@ -90,8 +80,6 @@ services:
       - ./microservices/auth-django/media_cdn:/home/static/media # Django Auth media files
       - ./microservices/websockets-django/static_cdn:/home/static # Django Websockets static files
       - ./microservices/websockets-django/media_cdn:/home/static/media # Django Websockets media files
-      - ./microservices/main-angular-ui:/var/www/main-angular-ui # Main Angular UI
-      - ./microservices/chats-react-ui:/var/www/chats-react-ui # Chats React UI
     ports:
       - '80:80'
 
