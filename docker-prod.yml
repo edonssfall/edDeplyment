@@ -6,7 +6,6 @@ services:
     env_file: ./envs/postgreSQL.env
     volumes:
       - pgdata:/var/lib/postgresql/pgdata/
-      - ./configs/postgres-entrypoint.sh:/docker-entrypoint-initdb.d/initdb.sh
     expose:
       - '5432'
     ports:
